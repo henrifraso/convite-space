@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OS¹</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 100%; height: 100%;
+      background: #000;
+      color: #e8e8e8;
+      font-family: 'Space Grotesk', sans-serif;
+      overflow: hidden;
+      cursor: default;
+    }
+
+    /* ── FUNDO OS1 ── */
+
+    .bg-layer {
+      position: fixed; inset: 0; z-index: 0;
+      display: flex; align-items: center; justify-content: center;
+      background: radial-gradient(ellipse 80% 60% at center, #1a1a1a 0%, #0a0a0a 50%, #000000 100%);
+      overflow: hidden;
+    }
+
+    .os1-text {
+      font-family: 'Big Shoulders Display', sans-serif;
+      font-weight: 900;
+      font-size: clamp(280px, 83vw, 1320px);
+      letter-spacing: -0.04em;
+      line-height: 0.82;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      background: linear-gradient(175deg, #060606 0%, #2e2e2e 50%, #060606 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      white-space: nowrap;
+      transform: translateX(-6vw) translateY(3vh);
+      user-select: none;
+      pointer-events: none;
+    }
+
+    @media (max-width: 768px) {
+      .os1-text { transform: translateX(-6vw) translateY(3vh) scaleY(3.2); }
+    }
+
+    .os1-o {
+      display: inline-block;
+      transform: scaleX(1.3) translateZ(0);
+      transform-origin: center;
+      background: linear-gradient(175deg, #060606 0%, #2e2e2e 50%, #060606 100%);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter:
+        drop-shadow(0 0 0px rgba(0,0,0,1))
+        drop-shadow(3px 0 1px rgba(0,0,0,0.55))
+        drop-shadow(4px 3px 6px rgba(0,0,0,0.15));
+    }
+
+    .os1-s {
+      display: inline-block;
+      transform: scaleX(1.3) translateZ(0);
+      transform-origin: center;
+      background: linear-gradient(175deg, #060606 0%, #2e2e2e 50%, #060606 100%);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter:
+        drop-shadow(0 0 0px rgba(0,0,0,1))
+        drop-shadow(3px 0 1px rgba(0,0,0,0.55))
+        drop-shadow(-5px 0 1px rgba(0,0,0,0.95))
+        drop-shadow(4px 3px 8px rgba(0,0,0,0.25));
+    }
+
+    .os1-1 {
+      display: inline-block;
+      transform: scaleX(2.0) translateX(1%) translateY(-3%) translateZ(0);
+      transform-origin: center;
+      background: linear-gradient(175deg, #060606 0%, #2e2e2e 50%, #060606 100%);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter:
+        drop-shadow(0 0 0px rgba(0,0,0,1))
+        drop-shadow(-5px 0 1px rgba(0,0,0,0.95))
+        drop-shadow(5px 4px 12px rgba(0,0,0,0.35));
+    }
+
+    /* Grain */
+    .grain-layer {
+      position: fixed; inset: 0; z-index: 1;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+    }
+
+    /* Fade topo/rodapé */
+    .fade-overlay {
+      position: fixed; inset: 0; z-index: 2;
+      pointer-events: none;
+      background: linear-gradient(to bottom,
+        rgba(0,0,0,1)    0%,
+        rgba(0,0,0,0.87) 0.6%,
+        rgba(0,0,0,0.66) 1.4%,
+        rgba(0,0,0,0.42) 2.4%,
+        rgba(0,0,0,0.2)  3.4%,
+        rgba(0,0,0,0.07) 4.2%,
+        rgba(0,0,0,0)    5%,
+        rgba(0,0,0,0)    95%,
+        rgba(0,0,0,0.07) 95.8%,
+        rgba(0,0,0,0.2)  96.6%,
+        rgba(0,0,0,0.42) 97.6%,
+        rgba(0,0,0,0.66) 98.6%,
+        rgba(0,0,0,0.87) 99.4%,
+        rgba(0,0,0,1)    100%
+      );
+    }
+
+    /* Sentinelas Safari */
+    .sentinel-top    { position: fixed; top: 0;    left: 0; right: 0; height: 1px; background: #000; z-index: 9999; pointer-events: none; }
+    .sentinel-bottom { position: fixed; bottom: 0; left: 0; right: 0; height: 1px; background: #000; z-index: 9999; pointer-events: none; }
+
+    /* Flash */
+    .flash {
+      position: fixed; inset: 0; z-index: 9000;
+      background: rgba(255,255,255,0);
+      pointer-events: none;
+      transition: background 0.08s ease;
+    }
+    .flash.fire { background: rgba(255,255,255,0.05); }
+
+    /* Animations globais */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.35; transform: scale(0.65); }
+    }
+    @keyframes shimmer {
+      0%   { left: -100%; }
+      100% { left: 200%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* ── CARD FULLSCREEN ── */
+
+    .card-wrapper {
+      position: fixed; inset: 0; z-index: 30;
+      pointer-events: none;
+    }
+    .card-wrapper.visible { pointer-events: all; }
+
+    .invite-card {
+      width: 100%; height: 100%;
+      background: rgba(6,6,6,0.9);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      display: grid;
+      grid-template-columns: 45fr 55fr;
+      clip-path: inset(48% 40% 48% 40% round 999px);
+      opacity: 0;
+      transition:
+        clip-path 0.6s cubic-bezier(0.4, 0, 0.1, 1),
+        opacity   0.12s ease;
+    }
+    .card-wrapper.visible .invite-card {
+      clip-path: inset(0% 0% 0% 0% round 0px);
+      opacity: 1;
+    }
+
+    /* ── Coluna esquerda ── */
+    .card-left {
+      padding: clamp(28px, 4vh, 64px) clamp(40px, 5vw, 80px);
+      display: flex; flex-direction: column; justify-content: center;
+      border-right: 1px solid rgba(255,255,255,0.06);
+      position: relative; overflow: hidden;
+    }
+
+    .card-tag {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 5px 14px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 999px;
+      font-size: 10px; font-weight: 500;
+      letter-spacing: 0.22em; color: #444;
+      text-transform: uppercase;
+      margin-bottom: clamp(14px, 2.2vh, 28px);
+      opacity: 0; transform: translateY(10px);
+      transition: opacity 0.4s ease 0.45s, transform 0.4s ease 0.45s;
+    }
+    .card-wrapper.visible .card-tag { opacity: 1; transform: none; }
+
+    .card-tag-dot {
+      width: 5px; height: 5px;
+      background: #fff; border-radius: 50%;
+      animation: pulse-dot 2.2s ease-in-out infinite;
+    }
+
+    .card-title {
+      font-family: 'Big Shoulders Display', sans-serif;
+      font-weight: 900;
+      font-size: clamp(38px, 6vh, 80px);
+      letter-spacing: -0.03em; line-height: 0.95;
+      color: #fff;
+      margin-bottom: clamp(8px, 1.4vh, 16px);
+      opacity: 0; transform: translateY(14px);
+      transition: opacity 0.5s ease 0.55s, transform 0.5s ease 0.55s;
+    }
+    .card-wrapper.visible .card-title { opacity: 1; transform: none; }
+
+    .card-subtitle {
+      font-size: 12px; color: #444;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      margin-bottom: clamp(14px, 2.8vh, 36px);
+      opacity: 0;
+      transition: opacity 0.4s ease 0.65s;
+    }
+    .card-wrapper.visible .card-subtitle { opacity: 1; }
+
+    .card-intro {
+      font-size: clamp(12px, 1.5vh, 14px); line-height: 1.75;
+      color: #555; font-weight: 400;
+      max-width: 420px;
+      opacity: 0;
+      transition: opacity 0.4s ease 0.72s;
+    }
+    .card-intro p { margin-bottom: clamp(8px, 1.2vh, 14px); }
+    .card-intro p:last-child { margin-bottom: 0; }
+    .card-intro strong { color: #c0c0c0; font-weight: 600; }
+    .card-intro em     { color: #888; font-style: normal; }
+    .card-wrapper.visible .card-intro { opacity: 1; }
+
+    /* Countdown bloco */
+    .countdown-block {
+      margin-top: clamp(16px, 2.5vh, 36px);
+      padding: clamp(12px, 1.8vh, 20px) clamp(16px, 2vw, 24px);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px;
+      background: rgba(255,255,255,0.02);
+      opacity: 0;
+      transition: opacity 0.4s ease 0.82s;
+    }
+    .card-wrapper.visible .countdown-block { opacity: 1; }
+
+    .countdown-label {
+      font-size: 9px; font-weight: 600;
+      letter-spacing: 0.28em; color: #333;
+      text-transform: uppercase;
+      margin-bottom: clamp(8px, 1.4vh, 14px);
+    }
+    .countdown-digits {
+      display: flex; align-items: flex-end;
+    }
+    .countdown-unit {
+      display: flex; flex-direction: column;
+      align-items: center; flex: 1;
+    }
+    .countdown-num {
+      font-family: 'Big Shoulders Display', sans-serif;
+      font-weight: 900;
+      font-size: clamp(26px, 4vh, 48px);
+      letter-spacing: -0.02em; line-height: 1;
+      color: #fff;
+      font-variant-numeric: tabular-nums;
+    }
+    .countdown-sep {
+      font-family: 'Big Shoulders Display', sans-serif;
+      font-weight: 900; font-size: clamp(22px, 3.2vh, 36px);
+      color: #2a2a2a; line-height: 1;
+      padding-bottom: 4px; padding-inline: 3px; flex-shrink: 0;
+    }
+    .countdown-unit-label {
+      font-size: 9px; font-weight: 500;
+      letter-spacing: 0.18em; color: #333;
+      text-transform: uppercase; margin-top: 6px;
+    }
+    .countdown-bar-wrap {
+      margin-top: clamp(10px, 1.6vh, 16px);
+      height: 2px; background: #1a1a1a;
+      border-radius: 999px; overflow: hidden;
+    }
+    .countdown-bar-fill {
+      height: 100%; background: #333;
+      border-radius: 999px;
+      transition: width 1s linear;
+    }
+
+    /* ── Coluna direita ── */
+    .card-right {
+      padding: clamp(28px, 4vh, 64px) clamp(40px, 5vw, 80px);
+      display: flex; flex-direction: column;
+      justify-content: center;
+      gap: clamp(16px, 2.8vh, 36px);
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(10px, 1.6vh, 20px);
+    }
+
+    .feature-item {
+      display: flex; flex-direction: column;
+      gap: clamp(6px, 1vh, 10px);
+      padding: clamp(14px, 2.2vh, 22px);
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px;
+      opacity: 0; transform: translateY(12px);
+      transition: opacity 0.4s ease, transform 0.4s ease, border-color 0.2s ease;
+    }
+    .feature-item:hover { border-color: rgba(255,255,255,0.12); }
+    .card-wrapper.visible .feature-item:nth-child(1) { opacity: 1; transform: none; transition-delay: 0.50s; }
+    .card-wrapper.visible .feature-item:nth-child(2) { opacity: 1; transform: none; transition-delay: 0.58s; }
+    .card-wrapper.visible .feature-item:nth-child(3) { opacity: 1; transform: none; transition-delay: 0.66s; }
+    .card-wrapper.visible .feature-item:nth-child(4) { opacity: 1; transform: none; transition-delay: 0.74s; }
+
+    .feature-icon {
+      width: 32px; height: 32px;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(0,0,0,0.4);
+    }
+    .feature-icon svg {
+      width: 14px; height: 14px;
+      stroke: #444; fill: none;
+      stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+    }
+    .feature-label { font-size: 13px; font-weight: 600; color: #d0d0d0; line-height: 1.2; }
+    .feature-desc  { font-size: 11px; color: #444; line-height: 1.55; }
+
+    /* Footer direito */
+    .card-footer-right {
+      display: flex; flex-direction: column;
+      gap: clamp(8px, 1.4vh, 14px);
+      opacity: 0;
+      transition: opacity 0.4s ease 0.82s;
+    }
+    .card-wrapper.visible .card-footer-right { opacity: 1; }
+
+    /* Botão "Pedir Acesso" — idêntico ao Be Different */
+    .be-diff-btn {
+      position: relative;
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: clamp(10px, 1.4vw, 18px) clamp(28px, 4vw, 56px);
+      padding-left: clamp(32px, 4.4vw, 60px);
+      background: rgba(255,255,255,0.045);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: none;
+      border-radius: 4px;
+      box-shadow:
+        0 0 0 0.5px rgba(255,255,255,0.14),
+        inset 0 1px 0 rgba(255,255,255,0.20),
+        inset 0 -1px 0 rgba(0,0,0,0.28),
+        0 12px 56px rgba(0,0,0,0.7),
+        0 0 100px rgba(255,255,255,0.028);
+      font-family: 'Big Shoulders Display', sans-serif;
+      font-weight: 900;
+      font-size: clamp(13px, 1.6vw, 24px);
+      letter-spacing: 0.4em;
+      cursor: pointer;
+      white-space: nowrap;
+      line-height: 1;
+      transition: letter-spacing 0.3s ease, box-shadow 0.4s ease;
+      -webkit-tap-highlight-color: transparent;
+      overflow: hidden;
+    }
+    .be-diff-btn::before {
+      content: '';
+      position: absolute;
+      inset: -50px -80px;
+      background: radial-gradient(ellipse at center, rgba(255,255,255,0.045) 0%, transparent 65%);
+      pointer-events: none;
+      border-radius: 999px;
+      z-index: -1;
+    }
+    .be-diff-btn::after {
+      content: '';
+      position: absolute; top: 0; left: -100%;
+      width: 50%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.055), transparent);
+      transform: skewX(-22deg);
+      animation: shimmer 4.5s ease-in-out 2.5s infinite;
+    }
+    .be-diff-btn:hover {
+      letter-spacing: 0.52em;
+      box-shadow:
+        0 0 0 0.5px rgba(255,255,255,0.32),
+        inset 0 1px 0 rgba(255,255,255,0.38),
+        inset 0 -1px 0 rgba(0,0,0,0.35),
+        0 20px 80px rgba(0,0,0,0.8),
+        0 0 140px rgba(255,255,255,0.06);
+    }
+    .be-diff-btn:focus  { outline: none; }
+    .be-diff-btn:active { opacity: 0.85; }
+
+    .be-diff-label {
+      background: linear-gradient(180deg,
+        rgba(160,160,160,0.9)  0%,
+        rgba(210,210,210,0.95) 35%,
+        rgba(255,255,255,1)    50%,
+        rgba(210,210,210,0.95) 65%,
+        rgba(160,160,160,0.9)  100%);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-transform: uppercase;
+    }
+
+    /* Estados do footer */
+    .footer-state {
+      display: flex; flex-direction: column;
+      gap: clamp(8px, 1.4vh, 14px);
+      transition: opacity 0.28s ease, transform 0.28s ease;
+    }
+    .footer-state.hidden {
+      opacity: 0; transform: translateY(6px);
+      pointer-events: none; position: absolute;
+      width: 100%;
+    }
+
+    /* Email form */
+    .email-form { display: flex; gap: 8px; align-items: stretch; }
+
+    .email-input {
+      flex: 1;
+      padding: clamp(13px, 1.8vh, 17px) 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 12px;
+      color: #e8e8e8;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.22s ease, background 0.22s ease;
+      min-width: 0;
+    }
+    .email-input::placeholder { color: #333; }
+    .email-input:focus {
+      border-color: rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.06);
+    }
+
+    .email-submit {
+      flex-shrink: 0; width: 50px;
+      background: rgba(255,255,255,0.9);
+      border: none; border-radius: 12px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+    .email-submit svg { width: 16px; height: 16px; stroke: #080808; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .email-submit:hover { opacity: 0.85; transform: translateY(-1px); }
+    .email-submit:active { transform: none; }
+
+    /* Confirmação */
+    .confirm-row {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      padding: clamp(13px, 1.8vh, 17px);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      font-size: 13px; font-weight: 500; color: #888;
+      letter-spacing: 0.05em;
+    }
+    .confirm-row svg { width: 15px; height: 15px; stroke: #555; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    .footer-note {
+      text-align: center; font-size: 10px;
+      color: #222; letter-spacing: 0.04em;
+    }
+    .footer-note a {
+      color: #333; text-decoration: none;
+      border-bottom: 1px solid #1e1e1e; padding-bottom: 1px;
+      transition: color 0.2s;
+    }
+    .footer-note a:hover { color: #888; }
+
+    /* Botão fechar */
+    .close-btn {
+      position: fixed; top: 28px; right: 28px;
+      width: 38px; height: 38px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 50%;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: #444;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+      z-index: 40;
+    }
+    .close-btn.visible { opacity: 1; pointer-events: all; }
+    .close-btn:hover { border-color: rgba(255,255,255,0.18); color: #fff; transform: rotate(90deg); }
+    .close-btn svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; }
+
+    /* ── TELA INICIAL ── */
+
+    .scene {
+      position: fixed; inset: 0; z-index: 10;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: clamp(12px, 2vh, 20px);
+    }
+
+    .invite-wrapper {
+      display: flex; flex-direction: column;
+      align-items: center;
+      gap: clamp(10px, 1.6vh, 16px);
+      transition: opacity 0.38s ease, transform 0.38s ease, filter 0.38s ease;
+    }
+    .invite-wrapper.hidden {
+      opacity: 0;
+      transform: scale(0.93) translateY(6px);
+      filter: blur(5px);
+      pointer-events: none;
+    }
+
+    /* Eyebrow */
+    .eyebrow {
+      display: flex; align-items: center; gap: 14px;
+      font-size: 9px; font-weight: 600;
+      letter-spacing: 0.32em; color: #333;
+      text-transform: uppercase;
+      animation: fadeUp 0.7s ease-out 0.25s both;
+    }
+    .eyebrow-bar {
+      display: block; width: 28px; height: 1px;
+      background: linear-gradient(90deg, transparent, #2a2a2a);
+      flex-shrink: 0;
+    }
+    .eyebrow-bar:last-child {
+      background: linear-gradient(90deg, #2a2a2a, transparent);
+    }
+
+    /* Separador vertical */
+    .hero-sep {
+      width: 1px; height: clamp(10px, 1.6vh, 18px);
+      background: linear-gradient(180deg, #2a2a2a 0%, transparent 100%);
+      animation: fadeIn 1s ease-out 0.5s both;
+    }
+
+    /* Botão ABRIR CONVITE — glass igual ao omni-site */
+    .invite-btn {
+      position: relative;
+      display: flex; align-items: center; gap: 12px;
+      font-family: 'Big Shoulders Display', sans-serif;
+      font-weight: 900;
+      font-size: clamp(13px, 1.6vw, 24px);
+      letter-spacing: 0.4em;
+      padding-left: 0.4em;
+      padding: clamp(10px, 1.4vw, 18px) clamp(28px, 4vw, 56px);
+      padding-left: clamp(32px, 4.4vw, 60px);
+      background: transparent;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: none;
+      border-radius: 4px;
+      box-shadow:
+        0 0 0 0.5px rgba(255,255,255,0.14),
+        inset 0 1px 0 rgba(255,255,255,0.20),
+        inset 0 -1px 0 rgba(0,0,0,0.28),
+        0 12px 56px rgba(0,0,0,0.7),
+        0 0 100px rgba(255,255,255,0.028);
+      cursor: pointer;
+      white-space: nowrap;
+      line-height: 1;
+      transition: letter-spacing 0.3s ease, box-shadow 0.4s ease, opacity 0.3s ease;
+      -webkit-tap-highlight-color: transparent;
+      overflow: hidden;
+    }
+    .invite-btn::before {
+      content: '';
+      position: absolute;
+      inset: -50px -80px;
+      background: radial-gradient(ellipse at center, rgba(255,255,255,0.045) 0%, transparent 65%);
+      pointer-events: none;
+      border-radius: 999px;
+      z-index: -1;
+    }
+    .invite-btn::after {
+      content: '';
+      position: absolute; top: 0; left: -100%;
+      width: 50%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.055), transparent);
+      transform: skewX(-22deg);
+      animation: shimmer 4.5s ease-in-out 2.5s infinite;
+    }
+    .invite-btn:hover {
+      letter-spacing: 0.52em;
+      box-shadow:
+        0 0 0 0.5px rgba(255,255,255,0.32),
+        inset 0 1px 0 rgba(255,255,255,0.38),
+        inset 0 -1px 0 rgba(0,0,0,0.35),
+        0 20px 80px rgba(0,0,0,0.8),
+        0 0 140px rgba(255,255,255,0.06);
+    }
+    .invite-btn:focus { outline: none; }
+    .invite-btn:active { opacity: 0.85; }
+    .invite-btn:disabled { opacity: 0.22; pointer-events: none; }
+
+    .invite-btn-label {
+      background: linear-gradient(180deg,
+        rgba(160,160,160,0.9)  0%,
+        rgba(210,210,210,0.95) 35%,
+        rgba(255,255,255,1)    50%,
+        rgba(210,210,210,0.95) 65%,
+        rgba(160,160,160,0.9)  100%);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-transform: uppercase;
+    }
+
+    /* Hints abaixo do botão */
+    .invite-hint {
+      font-size: 10px; color: #2a2a2a;
+      letter-spacing: 0.08em;
+      animation: fadeUp 0.7s ease-out 0.7s both;
+    }
+
+    /* Countdown mini pill */
+    .countdown-mini {
+      display: flex; align-items: center; gap: 8px;
+      padding: 6px 14px;
+      border: 1px solid #1e1e1e;
+      border-radius: 999px;
+      font-size: 10px; color: #2e2e2e;
+      letter-spacing: 0.07em;
+      animation: fadeUp 0.7s ease-out 0.85s both;
+    }
+    .countdown-mini-dot {
+      width: 4px; height: 4px; border-radius: 50%;
+      background: #2e2e2e;
+      animation: pulse-dot 2.2s ease-in-out infinite;
+    }
+    .countdown-mini-val { color: #444; font-weight: 500; }
+
+    /* Mobile */
+    .mobile-loader {
+      display: none;
+      flex-direction: column; align-items: center; gap: 32px;
+    }
+
+    /* Anel duplo premium */
+    .mobile-spinner {
+      position: relative;
+      width: 72px; height: 72px;
+      flex-shrink: 0;
+    }
+    .mobile-spinner::before,
+    .mobile-spinner::after {
+      content: '';
+      position: absolute; inset: 0;
+      border-radius: 50%;
+    }
+    /* Anel externo estático */
+    .mobile-spinner::before {
+      border: 1px solid rgba(255,255,255,0.06);
+      box-shadow: 0 0 28px rgba(255,255,255,0.03), inset 0 0 28px rgba(255,255,255,0.02);
+    }
+    /* Arco girando */
+    .mobile-spinner::after {
+      border: 1px solid transparent;
+      border-top-color: rgba(255,255,255,0.55);
+      border-right-color: rgba(255,255,255,0.12);
+      animation: spin 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      filter: drop-shadow(0 0 6px rgba(255,255,255,0.2));
+    }
+
+    /* Ponto central pulsante */
+    .mobile-spinner-dot {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      animation: pulse-dot 2.4s ease-in-out infinite;
+    }
+
+    .mobile-loader-text {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 8px;
+    }
+    .mobile-loader-label {
+      font-family: 'Big Shoulders Display', sans-serif;
+      font-weight: 900;
+      font-size: 9px;
+      color: rgba(255,255,255,0.18);
+      letter-spacing: 0.42em;
+      text-transform: uppercase;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (max-width: 900px) {
+      .invite-btn   { display: none; }
+      .invite-hint  { display: none; }
+      .mobile-loader { display: flex; }
+    }
+
+    /* Estado expirado */
+    .expired-overlay {
+      position: fixed; inset: 0; z-index: 20;
+      background: #000;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 16px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+    .expired-overlay.show { opacity: 1; pointer-events: all; }
+    .expired-title {
+      font-family: 'Big Shoulders Display', sans-serif;
+      font-weight: 900; font-size: clamp(32px, 5vw, 56px);
+      letter-spacing: -0.03em; color: #333;
+    }
+    .expired-sub { font-size: 12px; color: #222; letter-spacing: 0.08em; }
+  </style>
+</head>
+<body>
+
+  <div class="sentinel-top"></div>
+  <div class="sentinel-bottom"></div>
+  <div class="flash" id="flash"></div>
+
+  <!-- Fundo OS1 -->
+  <div class="bg-layer">
+    <div class="os1-text">
+      <span class="os1-o">O</span><span class="os1-s">S</span><span class="os1-1">1</span>
+    </div>
+  </div>
+
+  <div class="grain-layer"></div>
+  <div class="fade-overlay"></div>
+
+  <!-- Estado expirado -->
+  <div class="expired-overlay" id="expiredOverlay">
+    <div class="expired-title">CONVITE EXPIRADO</div>
+    <div class="expired-sub">este acesso não é mais válido</div>
+  </div>
+
+  <!-- Tela inicial -->
+  <div class="scene">
+    <div class="invite-wrapper" id="inviteWrapper">
+
+      <!-- Mobile -->
+      <div class="mobile-loader">
+        <div class="mobile-spinner"></div>
+        <div class="mobile-loader-text">
+          <span class="mobile-loader-label">abra no computador</span>
+        </div>
+      </div>
+
+      <!-- Desktop -->
+      <button class="invite-btn" id="openBtn" aria-label="Abrir convite">
+        <span class="invite-btn-label">Be Different</span>
+      </button>
+
+      <div class="invite-hint">acesso individual · não transferível</div>
+
+    </div>
+  </div>
+
+  <!-- Card fullscreen -->
+  <div class="card-wrapper" id="cardWrapper">
+    <div class="invite-card">
+
+      <!-- Esquerda -->
+      <div class="card-left">
+        <div class="card-tag">
+          <span class="card-tag-dot"></span>
+          Acesso Restrito
+        </div>
+        <div class="card-title">Eles te veem.<br>Você não.</div>
+        <div class="card-subtitle">OS¹ — Inteligência Competitiva para Franquias e Grupos</div>
+
+        <div class="card-intro">
+          <p>Seu concorrente não precisa te espionar.<br>
+          <strong>Ele só precisa de dados melhores que os seus.</strong></p>
+          <p>Em franquias e grupos empresariais, a diferença entre crescer e estabilizar
+          está em quem enxerga o mercado primeiro.
+          <em>Movimentações de preço, expansão de concorrentes, tendências do setor</em> —
+          tudo isso acontece antes de chegar até você.
+          <strong>O OS¹ existe para inverter isso.</strong></p>
+          <p>Enquanto você opera no presente, o OS¹ mapeia o que está por vir.
+          Este acesso é seu.<br>
+          <strong>Use antes que ele perceba.</strong></p>
+        </div>
+
+        <div class="countdown-block">
+          <div class="countdown-label">O tempo está passando</div>
+          <div class="countdown-digits">
+            <div class="countdown-unit">
+              <div class="countdown-num" id="cdHours">00</div>
+              <div class="countdown-unit-label">hrs</div>
+            </div>
+            <div class="countdown-sep">:</div>
+            <div class="countdown-unit">
+              <div class="countdown-num" id="cdMinutes">00</div>
+              <div class="countdown-unit-label">min</div>
+            </div>
+            <div class="countdown-sep">:</div>
+            <div class="countdown-unit">
+              <div class="countdown-num" id="cdSeconds">00</div>
+              <div class="countdown-unit-label">seg</div>
+            </div>
+          </div>
+          <div class="countdown-bar-wrap">
+            <div class="countdown-bar-fill" id="cdBar" style="width:100%"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Direita -->
+      <div class="card-right">
+        <div class="feature-grid">
+
+          <div class="feature-item">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <div class="feature-label">Radar de Concorrentes</div>
+            <div class="feature-desc">Monitore em tempo real preços, movimentos e estratégias de quem compete com você.</div>
+          </div>
+
+          <div class="feature-item">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            </div>
+            <div class="feature-label">Alerta Antecipado</div>
+            <div class="feature-desc">Sinais de mercado que indicam mudanças antes que impactem sua operação.</div>
+          </div>
+
+          <div class="feature-item">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+            </div>
+            <div class="feature-label">Visão da Rede</div>
+            <div class="feature-desc">Dados consolidados de toda a sua franquia ou grupo para decisões coordenadas.</div>
+          </div>
+
+          <div class="feature-item">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="feature-label">Vantagem de Fundador</div>
+            <div class="feature-desc">Condições exclusivas de acesso antes da abertura pública do OS¹.</div>
+          </div>
+
+        </div>
+
+        <div class="card-footer-right" style="position:relative;">
+
+          <!-- Estado 1: Botão Pedir Acesso -->
+          <div class="footer-state" id="stateBtn">
+            <button class="be-diff-btn" id="beDiffBtn">
+              <span class="be-diff-label">Pedir Acesso</span>
+            </button>
+            <div class="footer-note">
+              Ao continuar você concorda com os <a href="#">Termos de Uso</a> e a <a href="#">Política de Privacidade</a>
+            </div>
+          </div>
+
+          <!-- Estado 2: Campo de email -->
+          <div class="footer-state hidden" id="stateEmail">
+            <div class="email-form">
+              <input class="email-input" type="email" id="emailInput" placeholder="seu@email.com" autocomplete="email" />
+              <button class="email-submit" id="emailSubmit" aria-label="Enviar">
+                <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </button>
+            </div>
+            <div class="footer-note">Você receberá o link de acesso direto no e-mail.</div>
+          </div>
+
+          <!-- Estado 3: Confirmação -->
+          <div class="footer-state hidden" id="stateConfirm">
+            <div class="confirm-row">
+              <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              Enviado
+            </div>
+            <div class="footer-note">Verifique seu e-mail em alguns minutos.</div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <button class="close-btn" id="closeBtn" aria-label="Fechar">
+    <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+
+  <script>
+    const openBtn       = document.getElementById('openBtn');
+    const closeBtn      = document.getElementById('closeBtn');
+    const inviteWrapper = document.getElementById('inviteWrapper');
+    const cardWrapper   = document.getElementById('cardWrapper');
+    const flash         = document.getElementById('flash');
+
+    const cdH   = document.getElementById('cdHours');
+    const cdM   = document.getElementById('cdMinutes');
+    const cdS   = document.getElementById('cdSeconds');
+    const cdBar = document.getElementById('cdBar');
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+
+    // ── Cronômetro (conta para cima desde o clique) ──
+    let startTime  = null;
+    let tickInterval = null;
+
+    function startTimer() {
+      startTime = Date.now();
+      cdH.textContent = '00';
+      cdM.textContent = '00';
+      cdS.textContent = '00';
+      cdBar.style.width = '0%';
+
+      tickInterval = setInterval(() => {
+        const elapsed = Math.floor((Date.now() - startTime) / 1000);
+        const h = Math.floor(elapsed / 3600);
+        const m = Math.floor((elapsed % 3600) / 60);
+        const s = elapsed % 60;
+
+        cdH.textContent = pad(h);
+        cdM.textContent = pad(m);
+        cdS.textContent = pad(s);
+
+        // barra enche até 5 minutos (300s) como referência visual
+        const pct = Math.min((elapsed / 300) * 100, 100);
+        cdBar.style.width = pct + '%';
+      }, 1000);
+    }
+
+    function stopTimer() {
+      clearInterval(tickInterval);
+      tickInterval = null;
+      startTime    = null;
+    }
+
+    // ── Mobile guard ──
+    const isMobile = window.innerWidth <= 900 || navigator.maxTouchPoints > 1;
+    if (isMobile && openBtn) openBtn.disabled = true;
+
+    // ── Abrir card ──
+    function openCard() {
+      if (isMobile) return;
+      flash.classList.add('fire');
+      setTimeout(() => flash.classList.remove('fire'), 110);
+      inviteWrapper.classList.add('hidden');
+      setTimeout(() => {
+        cardWrapper.classList.add('visible');
+        closeBtn.classList.add('visible');
+        startTimer();
+      }, 70);
+    }
+
+    // ── Fechar card ──
+    function closeCard() {
+      stopTimer();
+      cardWrapper.classList.remove('visible');
+      closeBtn.classList.remove('visible');
+      setTimeout(() => inviteWrapper.classList.remove('hidden'), 420);
+    }
+
+    if (openBtn) openBtn.addEventListener('click', openCard);
+    closeBtn.addEventListener('click', closeCard);
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && cardWrapper.classList.contains('visible')) {
+        closeCard();
+      }
+    });
+
+    // ── Estados do footer ──
+    const stateBtn     = document.getElementById('stateBtn');
+    const stateEmail   = document.getElementById('stateEmail');
+    const stateConfirm = document.getElementById('stateConfirm');
+    const beDiffBtn    = document.getElementById('beDiffBtn');
+    const emailInput   = document.getElementById('emailInput');
+    const emailSubmit  = document.getElementById('emailSubmit');
+
+    function showState(active) {
+      [stateBtn, stateEmail, stateConfirm].forEach(s => {
+        s === active ? s.classList.remove('hidden') : s.classList.add('hidden');
+      });
+    }
+
+    beDiffBtn.addEventListener('click', () => {
+      showState(stateEmail);
+      setTimeout(() => emailInput.focus(), 50);
+    });
+
+    function submitEmail() {
+      showState(stateConfirm);
+    }
+
+    emailSubmit.addEventListener('click', submitEmail);
+    emailInput.addEventListener('keydown', e => { if (e.key === 'Enter') submitEmail(); });
+  </script>
+
+</body>
+</html>
