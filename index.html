@@ -710,7 +710,7 @@
 
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    @media (max-width: 900px) {
+    @media (max-width: 1024px), (pointer: coarse) {
       .invite-btn   { display: none; }
       .invite-hint  { display: none; }
       .mobile-loader { display: flex; }
@@ -956,7 +956,7 @@
     }
 
     // ── Mobile guard ──
-    const isMobile = window.innerWidth <= 900 || navigator.maxTouchPoints > 1;
+    const isMobile = window.innerWidth <= 1024 || navigator.maxTouchPoints > 0 || window.matchMedia('(pointer: coarse)').matches;
     if (isMobile && openBtn) openBtn.disabled = true;
 
     // ── Abrir card ──
