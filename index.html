@@ -125,14 +125,16 @@
     @media (max-width: 1024px), (pointer: coarse) {
       .fade-overlay {
         background: linear-gradient(to bottom,
-          rgba(0,0,0,0.72) 0%,
-          rgba(0,0,0,0.48) 4%,
-          rgba(0,0,0,0.18) 10%,
-          rgba(0,0,0,0)    18%,
-          rgba(0,0,0,0)    82%,
-          rgba(0,0,0,0.18) 90%,
-          rgba(0,0,0,0.48) 96%,
-          rgba(0,0,0,0.72) 100%
+          rgba(0,0,0,0.92) 0%,
+          rgba(0,0,0,0.68) 4%,
+          rgba(0,0,0,0.38) 10%,
+          rgba(0,0,0,0.12) 18%,
+          rgba(0,0,0,0)    26%,
+          rgba(0,0,0,0)    74%,
+          rgba(0,0,0,0.12) 82%,
+          rgba(0,0,0,0.38) 90%,
+          rgba(0,0,0,0.68) 96%,
+          rgba(0,0,0,0.92) 100%
         );
       }
     }
@@ -264,10 +266,10 @@
         0 8px 32px rgba(0,0,0,0.16),
         inset 0 1px 0 rgba(255,255,255,0.04);
       opacity: 0;
-      transition: opacity 0.3s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+      transition: opacity 0.4s ease 0.55s, box-shadow 0.28s ease, border-color 0.28s ease;
     }
+    .card-wrapper.visible .card-title-box { opacity: 1; }
     .card-title-box:hover {
-      opacity: 1;
       border-color: rgba(255,255,255,0.16);
       box-shadow:
         0 2px 8px rgba(0,0,0,0.26),
@@ -291,10 +293,10 @@
       scrollbar-width: thin;
       scrollbar-color: rgba(255,255,255,0.08) transparent;
       opacity: 0;
-      transition: opacity 0.3s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+      transition: opacity 0.4s ease 0.65s, box-shadow 0.28s ease, border-color 0.28s ease;
     }
+    .card-wrapper.visible .card-intro-box { opacity: 1; }
     .card-intro-box:hover {
-      opacity: 1;
       border-color: rgba(255,255,255,0.16);
       box-shadow:
         0 2px 8px rgba(0,0,0,0.26),
@@ -328,10 +330,10 @@
         0 8px 32px rgba(0,0,0,0.16),
         inset 0 1px 0 rgba(255,255,255,0.04);
       opacity: 0;
-      transition: opacity 0.3s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+      transition: opacity 0.4s ease 0.75s, box-shadow 0.28s ease, border-color 0.28s ease;
     }
+    .card-wrapper.visible .countdown-block { opacity: 1; }
     .countdown-block:hover {
-      opacity: 1;
       border-color: rgba(255,255,255,0.16);
       box-shadow:
         0 2px 8px rgba(0,0,0,0.26),
@@ -418,10 +420,13 @@
         0 8px 32px rgba(0,0,0,0.16),
         inset 0 1px 0 rgba(255,255,255,0.04);
       opacity: 0;
-      transition: opacity 0.3s ease, border-color 0.28s ease, box-shadow 0.28s ease;
+      transition: opacity 0.4s ease, border-color 0.28s ease, box-shadow 0.28s ease;
     }
+    .card-wrapper.visible .feature-item:nth-child(1) { opacity: 1; transition-delay: 0.50s; }
+    .card-wrapper.visible .feature-item:nth-child(2) { opacity: 1; transition-delay: 0.58s; }
+    .card-wrapper.visible .feature-item:nth-child(3) { opacity: 1; transition-delay: 0.66s; }
+    .card-wrapper.visible .feature-item:nth-child(4) { opacity: 1; transition-delay: 0.74s; }
     .feature-item:hover {
-      opacity: 1;
       border-color: rgba(255,255,255,0.16);
       box-shadow:
         0 2px 8px rgba(0,0,0,0.28),
@@ -451,9 +456,9 @@
       display: flex; flex-direction: column;
       gap: clamp(8px, 1.4vh, 14px);
       opacity: 0;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.4s ease 0.82s;
     }
-    .card-footer-right:hover { opacity: 1; }
+    .card-wrapper.visible .card-footer-right { opacity: 1; }
 
     /* Botão "Pedir Acesso" — idêntico ao Be Different */
     .be-diff-btn {
