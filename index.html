@@ -1000,7 +1000,7 @@
           <!-- Estado 2: Campo de email -->
           <div class="footer-state hidden" id="stateEmail">
             <div class="email-form">
-              <input class="email-input" type="email" id="emailInput" placeholder="seu@email.com" autocomplete="email" />
+              <input class="email-input" type="text" id="emailInput" placeholder="seu@email.com" autocomplete="off" spellcheck="false" />
               <button class="email-submit" id="emailSubmit" aria-label="Enviar">
                 <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
               </button>
@@ -1008,6 +1008,17 @@
             <div class="footer-note">
               Ao continuar você concorda com os <a href="#">Termos de Uso</a> e a <a href="#">Política de Privacidade</a>
             </div>
+          </div>
+
+          <!-- Estado 2b: Senha (@OS1) -->
+          <div class="footer-state hidden" id="statePassword">
+            <div class="email-form">
+              <input class="email-input" type="password" id="passwordInput" placeholder="senha de acesso" autocomplete="off" />
+              <button class="email-submit" id="passwordSubmit" aria-label="Entrar">
+                <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </button>
+            </div>
+            <div class="footer-note">Acesso restrito · OS¹</div>
           </div>
 
           <!-- Estado 3: Confirmação -->
@@ -1100,7 +1111,7 @@
     }
 
     // ── Mobile guard ──
-    const isMobile = window.innerWidth <= 1024 || navigator.maxTouchPoints > 0 || window.matchMedia('(pointer: coarse)').matches;
+    const isMobile = window.innerWidth <= 1024 || window.matchMedia('(pointer: coarse)').matches;
     if (isMobile && openBtn) openBtn.disabled = true;
 
     // ── Abrir card ──
@@ -1162,16 +1173,24 @@
       }
     });
 
+    // ── URLs (local vs produção) ──
+    const _isLocal  = window.location.hostname === 'localhost';
+    const APP_URL     = _isLocal ? 'http://localhost:3011' : 'https://sys1.space';
+    const CONVITE_URL = _isLocal ? 'http://localhost:4040' : 'https://www.convite.space';
+
     // ── Estados do footer ──
-    const stateBtn     = document.getElementById('stateBtn');
-    const stateEmail   = document.getElementById('stateEmail');
-    const stateConfirm = document.getElementById('stateConfirm');
-    const beDiffBtn    = document.getElementById('beDiffBtn');
-    const emailInput   = document.getElementById('emailInput');
-    const emailSubmit  = document.getElementById('emailSubmit');
+    const stateBtn      = document.getElementById('stateBtn');
+    const stateEmail    = document.getElementById('stateEmail');
+    const statePassword = document.getElementById('statePassword');
+    const stateConfirm  = document.getElementById('stateConfirm');
+    const beDiffBtn     = document.getElementById('beDiffBtn');
+    const emailInput    = document.getElementById('emailInput');
+    const emailSubmit   = document.getElementById('emailSubmit');
+    const passwordInput  = document.getElementById('passwordInput');
+    const passwordSubmit = document.getElementById('passwordSubmit');
 
     function showState(active) {
-      [stateBtn, stateEmail, stateConfirm].forEach(s => {
+      [stateBtn, stateEmail, statePassword, stateConfirm].forEach(s => {
         s === active ? s.classList.remove('hidden') : s.classList.add('hidden');
       });
     }
@@ -1181,12 +1200,41 @@
       setTimeout(() => emailInput.focus(), 50);
     });
 
+    // ── Roteamento por email ──
     function submitEmail() {
-      showState(stateConfirm);
+      const val = emailInput.value.trim();
+      if (!val) return;
+
+      if (val.toLowerCase() === '@os1') {
+        showState(statePassword);
+        setTimeout(() => passwordInput.focus(), 50);
+      } else if (val.startsWith('@')) {
+        window.location.href = CONVITE_URL;
+      } else {
+        showState(stateConfirm);
+      }
+    }
+
+    // ── Verificação de senha ──
+    function submitPassword() {
+      const pwd = passwordInput.value;
+      if (pwd === '12345678') {
+        window.location.href = APP_URL;
+      } else {
+        passwordInput.style.borderColor = 'rgba(255,100,100,0.4)';
+        setTimeout(() => {
+          passwordInput.style.borderColor = '';
+          passwordInput.value = '';
+          showState(stateConfirm);
+        }, 900);
+      }
     }
 
     emailSubmit.addEventListener('click', submitEmail);
     emailInput.addEventListener('keydown', e => { if (e.key === 'Enter') submitEmail(); });
+
+    passwordSubmit.addEventListener('click', submitPassword);
+    passwordInput.addEventListener('keydown', e => { if (e.key === 'Enter') submitPassword(); });
   </script>
 
 </body>
