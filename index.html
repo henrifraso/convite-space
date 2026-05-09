@@ -460,7 +460,7 @@
     }
     .card-wrapper.visible .card-footer-right { opacity: 1; }
 
-    /* Botão "Pedir Acesso" — idêntico ao Be Different */
+    /* Botão "Cliente" — idêntico ao Be Different */
     .be-diff-btn {
       position: relative;
       display: inline-flex; align-items: center; justify-content: center;
@@ -513,6 +513,16 @@
         inset 0 -1px 0 rgba(0,0,0,0.35),
         0 20px 80px rgba(0,0,0,0.8),
         0 0 140px rgba(255,255,255,0.06);
+    }
+    .be-diff-split {
+      display: flex;
+      gap: 8px;
+    }
+    .be-diff-half {
+      flex: 1;
+      min-width: 0;
+      padding-left: clamp(12px, 2vw, 28px);
+      padding-right: clamp(12px, 2vw, 28px);
     }
     .be-diff-btn:focus  { outline: none; }
     .be-diff-btn:active { opacity: 0.85; }
@@ -990,11 +1000,16 @@
 
         <div class="card-footer-right" style="position:relative;">
 
-          <!-- Estado 1: Botão Pedir Acesso -->
+          <!-- Estado 1: Botões Afiliado + Cliente -->
           <div class="footer-state" id="stateBtn">
-            <button class="be-diff-btn" id="beDiffBtn">
-              <span class="be-diff-label">Pedir Acesso</span>
-            </button>
+            <div class="be-diff-split">
+              <button class="be-diff-btn be-diff-half" id="affiliateBtn">
+                <span class="be-diff-label">Afiliado</span>
+              </button>
+              <button class="be-diff-btn be-diff-half" id="beDiffBtn">
+                <span class="be-diff-label">Cliente</span>
+              </button>
+            </div>
           </div>
 
           <!-- Estado 2: Campo de email -->
@@ -1184,10 +1199,13 @@
     const statePassword = document.getElementById('statePassword');
     const stateConfirm  = document.getElementById('stateConfirm');
     const beDiffBtn     = document.getElementById('beDiffBtn');
+    const affiliateBtn  = document.getElementById('affiliateBtn');
     const emailInput    = document.getElementById('emailInput');
     const emailSubmit   = document.getElementById('emailSubmit');
     const passwordInput  = document.getElementById('passwordInput');
     const passwordSubmit = document.getElementById('passwordSubmit');
+
+    let currentMode = 'access'; // 'access' | 'affiliate'
 
     function showState(active) {
       [stateBtn, stateEmail, statePassword, stateConfirm].forEach(s => {
@@ -1195,7 +1213,16 @@
       });
     }
 
+    // Cliente → modo simples (sem @ routing)
     beDiffBtn.addEventListener('click', () => {
+      currentMode = 'access';
+      showState(stateEmail);
+      setTimeout(() => emailInput.focus(), 50);
+    });
+
+    // Afiliado → modo com @ routing
+    affiliateBtn.addEventListener('click', () => {
+      currentMode = 'affiliate';
       showState(stateEmail);
       setTimeout(() => emailInput.focus(), 50);
     });
@@ -1205,11 +1232,15 @@
       const val = emailInput.value.trim();
       if (!val) return;
 
-      if (val.toLowerCase() === '@os1') {
-        showState(statePassword);
-        setTimeout(() => passwordInput.focus(), 50);
-      } else if (val.startsWith('@')) {
-        window.location.href = CONVITE_URL;
+      if (currentMode === 'affiliate') {
+        if (val.toLowerCase() === '@os1') {
+          showState(statePassword);
+          setTimeout(() => passwordInput.focus(), 50);
+        } else if (val.startsWith('@')) {
+          window.location.href = CONVITE_URL;
+        } else {
+          showState(stateConfirm);
+        }
       } else {
         showState(stateConfirm);
       }
