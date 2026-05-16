@@ -11,8 +11,8 @@
 
     html, body {
       width: 100%; height: 100%;
-      background: #000;
-      color: #e8e8e8;
+      background: #222222;
+      color: #222222;
       font-family: 'Space Grotesk', sans-serif;
       overflow: hidden;
       cursor: default;
@@ -23,8 +23,8 @@
     .bg-layer {
       position: fixed; inset: 0; z-index: 0;
       display: flex; align-items: center; justify-content: center;
-      background: radial-gradient(ellipse 80% 60% at center, #2e2e2e 0%, #181818 50%, #0a0a0a 100%);
-      overflow: hidden;
+      background: #222222;
+      overflow: visible;
     }
 
     .os1-text {
@@ -33,62 +33,50 @@
       font-size: clamp(280px, 83vw, 1320px);
       letter-spacing: -0.04em;
       line-height: 0.82;
-      color: transparent;
-      -webkit-text-fill-color: transparent;
-      background: linear-gradient(175deg, #111111 0%, #3c3c3c 12%, #363636 50%, #303030 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
+      color: #3a3a3a;
       white-space: nowrap;
-      transform: translateX(-6vw) translateY(3vh) scaleY(0.88);
+      transform: translateX(-6vw) translateY(1vh) scaleY(0.88);
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       user-select: none;
       pointer-events: none;
     }
 
-
     @media (max-width: 768px) {
-      .os1-text { transform: scaleY(3.2) translateX(-6vw) translateY(3vh); }
+      .os1-text { transform: translateX(-6vw) translateY(3vh) scaleY(0.95); }
     }
 
     .os1-o {
       display: inline-block;
       transform: scaleX(1.3) translateZ(0);
       transform-origin: center;
-      background: linear-gradient(175deg, #111111 0%, #3c3c3c 12%, #363636 50%, #303030 100%);
-      -webkit-background-clip: text; background-clip: text;
-      -webkit-text-fill-color: transparent;
-      filter:
-        drop-shadow(0 0 0px rgba(0,0,0,1))
-        drop-shadow(3px 0 1px rgba(0,0,0,0.55))
-        drop-shadow(4px 3px 6px rgba(0,0,0,0.15));
+      -webkit-text-fill-color: #3a3a3a;
+      color: #3a3a3a;
+      -webkit-text-stroke: 2px rgba(255,255,255,0.18);
+      paint-order: stroke fill;
+      filter: drop-shadow(-5px 3px 3px rgba(0,0,0,0.55));
     }
 
     .os1-s {
       display: inline-block;
       transform: scaleX(1.3) translateZ(0);
       transform-origin: center;
-      background: linear-gradient(175deg, #111111 0%, #3c3c3c 12%, #363636 50%, #303030 100%);
-      -webkit-background-clip: text; background-clip: text;
-      -webkit-text-fill-color: transparent;
-      filter:
-        drop-shadow(0 0 0px rgba(0,0,0,1))
-        drop-shadow(3px 0 1px rgba(0,0,0,0.55))
-        drop-shadow(-5px 0 1px rgba(0,0,0,0.95))
-        drop-shadow(4px 3px 8px rgba(0,0,0,0.25));
+      -webkit-text-fill-color: #3a3a3a;
+      color: #3a3a3a;
+      -webkit-text-stroke: 2px rgba(255,255,255,0.18);
+      paint-order: stroke fill;
+      filter: drop-shadow(-5px 3px 3px rgba(0,0,0,0.55));
     }
 
     .os1-1 {
       display: inline-block;
-      transform: scaleX(2.0) translateX(1%) translateY(-3%) translateZ(0);
+      transform: scaleX(2.0) translateX(1%) translateZ(0);
       transform-origin: center;
-      background: linear-gradient(175deg, #111111 0%, #3c3c3c 12%, #363636 50%, #303030 100%);
-      -webkit-background-clip: text; background-clip: text;
-      -webkit-text-fill-color: transparent;
-      filter:
-        drop-shadow(0 0 0px rgba(0,0,0,1))
-        drop-shadow(-5px 8px 1px rgba(0,0,0,0.85))
-        drop-shadow(5px 4px 12px rgba(0,0,0,0.35));
+      -webkit-text-fill-color: #3a3a3a;
+      color: #3a3a3a;
+      -webkit-text-stroke: 2px rgba(255,255,255,0.18);
+      paint-order: stroke fill;
+      filter: drop-shadow(-6px 4px 3px rgba(0,0,0,0.60));
     }
 
     /* OS1 mais claro quando card aberto — filter anima, gradient não */
@@ -96,14 +84,14 @@
       transition: filter 0.5s ease;
     }
     body.card-open .bg-layer {
-      filter: brightness(1.8) contrast(1.05);
+      filter: brightness(1.06) contrast(1.02);
     }
 
     /* Grain */
     .grain-layer {
       position: fixed; inset: 0; z-index: 1;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      opacity: 0.018;
+      opacity: 0;
       pointer-events: none;
     }
 
@@ -111,23 +99,18 @@
     .fade-overlay {
       position: fixed; inset: 0; z-index: 2;
       pointer-events: none;
-      background: linear-gradient(to bottom,
-        rgba(0,0,0,0.92) 0%,
-        rgba(0,0,0,0.68) 4%,
-        rgba(0,0,0,0.38) 10%,
-        rgba(0,0,0,0.12) 18%,
-        rgba(0,0,0,0)    26%,
-        rgba(0,0,0,0)    74%,
-        rgba(0,0,0,0.12) 82%,
-        rgba(0,0,0,0.38) 90%,
-        rgba(0,0,0,0.68) 96%,
-        rgba(0,0,0,0.92) 100%
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.95) 0%,
+        transparent 22%,
+        transparent 78%,
+        #000000 100%
       );
     }
 
     /* Sentinelas Safari */
-    .sentinel-top    { position: fixed; top: 0;    left: 0; right: 0; height: 1px; background: #000; z-index: 9999; pointer-events: none; }
-    .sentinel-bottom { position: fixed; bottom: 0; left: 0; right: 0; height: 1px; background: #000; z-index: 9999; pointer-events: none; }
+    .sentinel-top    { display: none; }
+    .sentinel-bottom { display: none; }
 
     /* Flash */
     .flash {
@@ -337,7 +320,7 @@
     }
     .countdown-bar-wrap {
       margin-top: clamp(10px, 1.6vh, 16px);
-      height: 2px; background: #1a1a1a;
+      height: 2px; background: #222222;
       border-radius: 999px; overflow: hidden;
     }
     .countdown-bar-fill {
@@ -428,9 +411,10 @@
       animation: mirror-sweep 1.6s ease-in-out infinite;
     }
     .be-diff-label { animation-duration: 3.4s; }
-    #affiliateBtn .be-diff-label { animation-delay: 0s; }
-    #parceirosBtn .be-diff-label { animation-delay: 0.6s; }
-    #beDiffBtn    .be-diff-label { animation-delay: 1.2s; }
+    #affiliateBtn      .be-diff-label { animation-delay: 0s; }
+    #parceirosBtn      .be-diff-label { animation-delay: 0.6s; }
+    #colaboradoresBtn  .be-diff-label { animation-delay: 1.0s; }
+    #beDiffBtn         .be-diff-label { animation-delay: 1.5s; }
 
     /* Estados do footer */
     .footer-state {
@@ -893,6 +877,9 @@
               <button class="be-diff-btn be-diff-half" id="parceirosBtn">
                 <span class="be-diff-label">Parceiros</span>
               </button>
+              <button class="be-diff-btn be-diff-half" id="colaboradoresBtn">
+                <span class="be-diff-label">Colaboradores</span>
+              </button>
               <button class="be-diff-btn be-diff-half" id="beDiffBtn">
                 <span class="be-diff-label">Clientes</span>
               </button>
@@ -1076,18 +1063,19 @@
     });
 
     // ── URLs (local vs produção) ──
-    const _isLocal    = window.location.hostname === 'localhost';
-    const CONVITE_URL = _isLocal ? 'http://localhost:4040' : 'https://convite.os1.space';
+    const _isLocal      = window.location.hostname === 'localhost';
+    const BACKEND_URL   = _isLocal ? 'http://localhost:3002' : 'https://omni-production-32d3.up.railway.app';
+    const APP_URL       = _isLocal ? 'http://localhost:3011' : 'https://app.os1.space';
+    const APP_FALLBACK  = 'https://os1-deploy.vercel.app';
 
-    function goToApp() {
-      if (_isLocal) { window.location.href = 'http://localhost:3011'; return; }
-      const primary  = 'https://app.os1.space';
-      const fallback = 'https://os1-deploy.vercel.app';
+    function goToApp(token, orgId, buId, role) {
+      const params = token ? `?token=${encodeURIComponent(token)}&org=${encodeURIComponent(orgId||'')}&bu=${encodeURIComponent(buId||'')}${role ? '&role='+encodeURIComponent(role) : ''}` : '';
+      if (_isLocal) { window.location.href = APP_URL + params; return; }
       const ctrl = new AbortController();
       const t = setTimeout(() => ctrl.abort(), 3000);
-      fetch(primary + '/favicon.ico', { mode: 'no-cors', cache: 'no-store', signal: ctrl.signal })
-        .then(() => { clearTimeout(t); window.location.href = primary; })
-        .catch(() => { clearTimeout(t); window.location.href = fallback; });
+      fetch(APP_URL + '/favicon.ico', { mode: 'no-cors', cache: 'no-store', signal: ctrl.signal })
+        .then(() => { clearTimeout(t); window.location.href = APP_URL + params; })
+        .catch(() => { clearTimeout(t); window.location.href = APP_FALLBACK + params; });
     }
 
     // ── Estados do footer ──
@@ -1095,15 +1083,16 @@
     const stateEmail    = document.getElementById('stateEmail');
     const statePassword = document.getElementById('statePassword');
     const stateConfirm  = document.getElementById('stateConfirm');
-    const beDiffBtn     = document.getElementById('beDiffBtn');
-    const affiliateBtn  = document.getElementById('affiliateBtn');
-    const parceirosBtn  = document.getElementById('parceirosBtn');
+    const beDiffBtn        = document.getElementById('beDiffBtn');
+    const affiliateBtn     = document.getElementById('affiliateBtn');
+    const parceirosBtn     = document.getElementById('parceirosBtn');
+    const colaboradoresBtn = document.getElementById('colaboradoresBtn');
     const emailInput    = document.getElementById('emailInput');
     const emailSubmit   = document.getElementById('emailSubmit');
     const passwordInput  = document.getElementById('passwordInput');
     const passwordSubmit = document.getElementById('passwordSubmit');
 
-    let currentMode = 'access'; // 'access' | 'affiliate'
+    let pendingHandle = '';
 
     function showState(active) {
       [stateBtn, stateEmail, statePassword, stateConfirm].forEach(s => {
@@ -1111,58 +1100,96 @@
       });
     }
 
-    // Cliente → modo simples (sem @ routing)
-    beDiffBtn.addEventListener('click', () => {
-      currentMode = 'access';
+    // Todos os 4 botões abrem o mesmo campo — lógica unificada
+    function openInput() {
+      emailInput.placeholder = '@ ou email';
       showState(stateEmail);
       setTimeout(() => emailInput.focus(), 50);
-    });
+    }
 
-    // Parceiros → mesmo comportamento do Cliente
-    parceirosBtn.addEventListener('click', () => {
-      currentMode = 'access';
-      showState(stateEmail);
-      setTimeout(() => emailInput.focus(), 50);
-    });
+    beDiffBtn.addEventListener('click', openInput);
+    affiliateBtn.addEventListener('click', openInput);
+    colaboradoresBtn.addEventListener('click', openInput);
+    parceirosBtn.addEventListener('click', openInput);
 
-    // Afiliado → modo com @ routing
-    affiliateBtn.addEventListener('click', () => {
-      currentMode = 'affiliate';
-      showState(stateEmail);
-      setTimeout(() => emailInput.focus(), 50);
-    });
-
-    // ── Roteamento por email ──
-    function submitEmail() {
+    // ── Submit: @ → verifica no backend · email → lista de espera ──
+    async function submitEmail() {
       const val = emailInput.value.trim();
       if (!val) return;
 
-      if (currentMode === 'affiliate') {
-        if (val.toLowerCase() === '@os1') {
-          showState(statePassword);
-          setTimeout(() => passwordInput.focus(), 50);
-        } else if (val.startsWith('@')) {
-          window.location.href = CONVITE_URL;
-        } else {
-          showState(stateConfirm);
+      // Se começa com @ ou não tem @, trata como handle
+      if (val.startsWith('@') || !val.includes('@')) {
+        const handle = val.replace(/^@+/, '').toLowerCase();
+        if (!handle) return;
+
+        emailSubmit.disabled = true;
+        emailInput.disabled = true;
+        const originalPlaceholder = emailInput.placeholder;
+
+        function resetInput(msg, delay) {
+          emailInput.style.borderColor = 'rgba(255,100,100,0.35)';
+          emailInput.placeholder = msg;
+          emailInput.value = '';
+          setTimeout(() => {
+            emailInput.style.borderColor = '';
+            emailInput.placeholder = '@ ou email';
+            emailInput.disabled = false;
+            emailInput.focus();
+            emailSubmit.disabled = false;
+          }, delay);
         }
-      } else {
-        showState(stateConfirm);
+
+        try {
+          const r = await fetch(`${BACKEND_URL}/api/auth/check-handle?handle=${encodeURIComponent(handle)}`);
+          if (!r.ok) { resetInput('erro no servidor · tente novamente', 1800); return; }
+          const data = await r.json();
+          if (data.exists) {
+            pendingHandle = handle;
+            const note = statePassword.querySelector('.footer-note');
+            if (note) note.textContent = `@${handle} · OS¹`;
+            emailInput.disabled = false;
+            emailSubmit.disabled = false;
+            showState(statePassword);
+            setTimeout(() => passwordInput.focus(), 50);
+          } else {
+            resetInput(`@${handle} não encontrado`, 1800);
+          }
+        } catch {
+          resetInput('sem conexão · tente novamente', 2000);
+        }
+        return;
       }
+
+      // É um email → lista de espera
+      showState(stateConfirm);
     }
 
-    // ── Verificação de senha ──
-    function submitPassword() {
+    // ── Login com senha (backend) ──
+    async function submitPassword() {
       const pwd = passwordInput.value;
-      if (pwd === '12345678') {
-        goToApp();
-      } else {
-        passwordInput.style.borderColor = 'rgba(255,100,100,0.4)';
-        setTimeout(() => {
-          passwordInput.style.borderColor = '';
-          passwordInput.value = '';
-          showState(stateConfirm);
-        }, 900);
+      if (!pwd || !pendingHandle) return;
+
+      passwordInput.disabled = true;
+      try {
+        const r = await fetch(`${BACKEND_URL}/api/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ handle: pendingHandle, password: pwd }),
+        });
+        const data = await r.json();
+        if (r.ok && data.access_token) {
+          goToApp(data.access_token, data.org_id, data.bu_id, data.user?.role);
+        } else {
+          passwordInput.disabled = false;
+          passwordInput.style.borderColor = 'rgba(255,100,100,0.4)';
+          setTimeout(() => { passwordInput.style.borderColor = ''; passwordInput.value = ''; passwordInput.focus(); }, 900);
+        }
+      } catch {
+        passwordInput.disabled = false;
+        passwordInput.style.borderColor = 'rgba(255,165,0,0.4)';
+        passwordInput.placeholder = 'erro de conexão · tente novamente';
+        passwordInput.value = '';
+        setTimeout(() => { passwordInput.style.borderColor = ''; passwordInput.placeholder = 'senha de acesso'; passwordInput.focus(); }, 1800);
       }
     }
 
