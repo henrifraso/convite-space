@@ -35,7 +35,7 @@
       line-height: 0.82;
       color: #3a3a3a;
       white-space: nowrap;
-      transform: translateX(-6vw) translateY(1vh) scaleY(0.88);
+      transform: translateX(-6vw) translateY(1vh) scaleY(0.96);
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       user-select: none;
@@ -43,7 +43,16 @@
     }
 
     @media (max-width: 768px) {
-      .os1-text { transform: translateX(-6vw) translateY(3vh) scaleY(0.95); }
+      .os1-text { transform: translateX(-6vw) translateY(3vh) scaleY(1.05); }
+    }
+
+    /* Mobile/tablet em portrait — letras esticam do topo ao rodapé */
+    @media (orientation: portrait) and (max-width: 1024px) {
+      .os1-text {
+        font-size: clamp(280px, 65vh, 1100px);
+        transform: translateX(-6vw) translateY(3vh) scaleY(1.68);
+        line-height: 0.78;
+      }
     }
 
     .os1-o {
@@ -95,17 +104,30 @@
       pointer-events: none;
     }
 
-    /* Fade topo/rodapé */
+    /* Fade topo/rodapé — desktop levemente mais claro */
     .fade-overlay {
       position: fixed; inset: 0; z-index: 2;
       pointer-events: none;
       background: linear-gradient(
         to bottom,
-        rgba(0,0,0,0.95) 0%,
+        rgba(0,0,0,0.78) 0%,
         transparent 22%,
         transparent 78%,
-        #000000 100%
+        rgba(0,0,0,0.82) 100%
       );
+    }
+
+    /* Mobile/tablet: mantém o escuro original */
+    @media (max-width: 768px), (orientation: portrait) and (max-width: 1024px) {
+      .fade-overlay {
+        background: linear-gradient(
+          to bottom,
+          rgba(0,0,0,0.95) 0%,
+          transparent 22%,
+          transparent 78%,
+          #000000 100%
+        );
+      }
     }
 
     /* Sentinelas Safari */
@@ -687,7 +709,7 @@
       font-family: 'Big Shoulders Display', sans-serif;
       font-weight: 900;
       font-size: 13px;
-      color: rgba(255,255,255,0.18);
+      color: #ffffff;
       letter-spacing: 0.42em;
       text-transform: uppercase;
     }
@@ -719,7 +741,7 @@
       .mobile-loader-label {
         font-size: 20px;
         letter-spacing: 0.38em;
-        color: rgba(255,255,255,0.32);
+        color: #ffffff;
       }
     }
 
